@@ -1,9 +1,9 @@
 #include "time_module.h"
 #include "display_module.h"
 
-extern uchar one_second;
+extern uint one_second;
 
-uchar system_hour, system_minute, system_second;
+uint system_hour, system_minute, system_second;
 
 void time_handle() 
 {
@@ -21,6 +21,7 @@ void time_handle()
 				++system_hour;
 				if (system_hour == 24) {
 				 	system_hour = 0;
+					date_handle();
 				}
 				lcd_update_bit(HOUR_LCD_BIT, system_hour);
 			}

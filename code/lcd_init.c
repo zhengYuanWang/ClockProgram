@@ -1,11 +1,18 @@
 #include "tools.h"
 #include "display_module.h"
+#include "time_module.h"
 
 void lcd_init()
 {
 	uint count;
-	ucode date_init[] = "2019-10-23 THU";
-	ucode time_init[] = "00:00:00";
+	ucode date_init[] = "2008-04-28 Fri";
+	ucode time_init[] = "23:59:58";
+	system_second = 58;
+	system_minute = 59;
+	system_hour = 23;
+	system_year = 2008;
+	system_month = 4;
+	system_day = 28;
 	
  	dula = 0;
 	wela = 0;

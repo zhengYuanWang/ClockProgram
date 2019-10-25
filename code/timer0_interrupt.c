@@ -1,6 +1,6 @@
 #include "time_module.h"
 
-uchar one_second;
+uint one_second;
 
 void timer0() interrupt 1
 {
