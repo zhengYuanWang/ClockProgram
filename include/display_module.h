@@ -11,8 +11,8 @@
 #define SECOND_LCD_BIT	0x80 + 0x40 + 10	
 
 void lcd_update_bit(uchar, uint) reentrant;
-void lcd_update_year(uchar, uint);
-void lcd_update_week(uchar, uint);
+void lcd_update_year(uchar, uint) reentrant;
+void lcd_update_week(uchar, uint) reentrant;
 void lcd_init();
 
 

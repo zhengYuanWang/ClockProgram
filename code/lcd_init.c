@@ -5,14 +5,14 @@
 void lcd_init()
 {
 	uint count;
-	ucode date_init[] = "2008-04-28 Fri";
+	ucode date_init[] = "2019-10-27 Sun";
 	ucode time_init[] = "23:59:58";
 	system_second = 58;
 	system_minute = 59;
 	system_hour = 23;
-	system_year = 2008;
-	system_month = 4;
-	system_day = 28;
+	system_year = 2019;
+	system_month = 10;
+	system_day = 27;
 	
  	dula = 0;
 	wela = 0;

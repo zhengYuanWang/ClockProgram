@@ -2,7 +2,6 @@
 #define _H_KEY_MODULE
 
 
-void key_init();
 void key_scan();
 
 

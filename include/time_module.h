@@ -9,10 +9,13 @@
 
 extern uint system_hour, system_minute, system_second;
 extern uint system_year, system_month, system_day;
+extern uchar week[7][4];
+extern uint month_day[];
 
 void timer0_init();
 void time_handle();
 void date_handle();
+uint get_week(uint, uint, uint) reentrant;
 
 
 #endif

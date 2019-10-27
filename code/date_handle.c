@@ -1,10 +1,10 @@
 #include "tools.h"
 #include "display_module.h"
 
-uint system_year, system_month, system_day;
-static uint month_day[] = {31, 0, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-static uint current_week;
+uint month_day[] = {31, 0, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 uchar week[7][4] = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
+uint system_year, system_month, system_day;
+static uint current_week;
 
 static uint is_bissextile(uint year)
 {
@@ -15,7 +15,7 @@ static uint is_bissextile(uint year)
 		return false;
 }
 
-static uint get_week(uint y, uint m, uint d)
+uint get_week(uint y, uint m, uint d) reentrant
 {
 	return (d + (2 * m) + (3 * (m + 1)) / 5 + y + (y / 4) - (y / 100) + (y / 400)) % 7;
 }
@@ -42,6 +42,7 @@ void date_handle()
 		lcd_update_year(YEAR_LCD_BIT, system_year);
 	}
 	lcd_update_bit(DAY_LCD_BIT, system_day);
+
 	current_week = get_week(system_year, system_month, system_day);
 	lcd_update_week(WEEK_LCD_BIT, current_week);
 }
