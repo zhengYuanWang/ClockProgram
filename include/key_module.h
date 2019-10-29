@@ -3,6 +3,8 @@
 
 
 void key_scan();
+void set_sub();
+void set_add();
 
 
 #endif
