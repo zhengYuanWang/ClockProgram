@@ -11,7 +11,7 @@ void main()
 	lcd_init();		//LCD液晶屏初始化
 	rd = 0;
 
-	while (true) {
+	while (TRUE) {
 		key_scan();	//调用键盘扫描
 	}	
 }

@@ -10,9 +10,9 @@ static uint is_bissextile(uint year)
 {
 	if ((year % 4 == 0 && year % 100 != 0)
 		|| (year % 4 == 0)) {
-	 	return true;
+	 	return TRUE;
 	} else 
-		return false;
+		return FALSE;
 }
 
 uint get_week(uint y, uint m, uint d) reentrant
