@@ -17,7 +17,8 @@ static uint is_bissextile(uint year)
 
 uint get_week(uint y, uint m, uint d) reentrant
 {
-	return (d + (2 * m) + (3 * (m + 1)) / 5 + y + (y / 4) - (y / 100) + (y / 400)) % 7;
+	return (d + (2 * m) + (3 * (m + 1)) / 5 + 
+			y + (y / 4) - (y / 100) + (y / 400)) % 7;
 }
 
 void date_handle()

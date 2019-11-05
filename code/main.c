@@ -13,5 +13,6 @@ void main()
 
 	while (TRUE) {
 		key_scan();	//╣Всц╪Эели╗цХ
+		alarm_timeout();
 	}	
 }

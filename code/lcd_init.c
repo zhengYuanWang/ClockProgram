@@ -6,6 +6,7 @@ void lcd_init()
 {
 	uint count;
 	ucode date_init[] = "2019-10-27 Sun";
+	
 	ucode time_init[] = "23:59:58";
 	system_second = 58;
 	system_minute = 59;
@@ -13,6 +14,13 @@ void lcd_init()
 	system_year = 2019;
 	system_month = 10;
 	system_day = 27;
+	
+	alarm_second = 5;
+	alarm_minute = 0;
+	alarm_hour = 0;
+	alarm_year = 2019;
+	alarm_month = 10;
+	alarm_day = 28; 
 	
  	dula = 0;
 	wela = 0;

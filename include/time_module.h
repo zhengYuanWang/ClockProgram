@@ -16,6 +16,9 @@ void timer0_init();
 void time_handle();
 void date_handle();
 uint get_week(uint, uint, uint) reentrant;
+void alarm_display();
+void alarm_timeout();
+void system_display();
 
 
 #endif

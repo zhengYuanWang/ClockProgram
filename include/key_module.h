@@ -3,8 +3,8 @@
 
 
 void key_scan();
-void set_sub();
-void set_add();
+void set_sub(uint, uint);
+void set_add(uint, uint);
 
 
 #endif
