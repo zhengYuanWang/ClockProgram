@@ -1,6 +1,6 @@
 #include "tools.h"
 #include "display_module.h"
-#include "time_module.h"			  
+#include "time_module.h"		  
 
 void lcd_update_bit(uchar wbit, uint wdata) reentrant
 {

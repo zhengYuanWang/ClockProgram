@@ -1,99 +1,185 @@
 #include "tools.h"
 #include "time_module.h"
 #include "display_module.h"
-#include "key_module.h"
+#include "function_module.h"
 
-sbit KEY0_set_system = P3^0;
-sbit KEY1_set_alarm = P3^1;
-sbit KEY2_add = P3^2;
-sbit KEY3_sub = P3^3;
+sbit key_sys = P3^0;
+sbit key_arm = P3^1;
+sbit key_add = P3^2;
+sbit key_sub = P3^3;
 
-uint KEY0_count;
-uint KEY1_count;
-uint *KEY0_count_p = &KEY0_count;
-uint *KEY1_count_p = &KEY1_count;
+uint key_count = 0;
+uint status = 0;
 
-static void KEY_count_handle(uint*);
-static void add_sub_select(uint, uint);
+void add();
+void sub();
+void select_set();
 
 void key_scan()
 {
-	if (KEY0_set_system == 0) {
+	if (key_sys == 0) {
 		delayms(5);
-		if (KEY0_set_system == 0) {
-		 	while (!KEY0_set_system);
-			//buzzer(100);
-			KEY1_count = 0;
-			system_display();
-			KEY_count_handle(KEY0_count_p);
+		if (key_sys == 0) {
+		 	while(!key_sys);
+			status = 0;
+			TR0 = 0;
+			lcd_write_com(0x0f);
+			while(TRUE) {		//循环检查是否按下其他键，唯一出口为设置完毕
+				if (key_sys == 0) {
+				   	delayms(5);
+					if (key_sys == 0) {
+					 	while (!key_sys);
+						++key_count;
+						select_set();
+					}
+				}
+				if (key_add == 0) {
+				  	delayms(5);
+					if (key_add == 0) {
+						while (!key_add);
+					 	add();
+						system_display();
+						select_set();
+					}
+				} 
+				if (key_sub == 0) {
+				  	delayms(5);
+					if (key_sub == 0) {
+						while (!key_sub);
+					      	sub();
+						system_display();
+						select_set();
+					}
+				}
+				if (key_count == 6) {
+					key_count = 0;
+					lcd_write_com(0x0c);
+					break;	//唯一出口
+				}		
+			}
+			TR0 = 1;
 		}
 	}
-	if (KEY1_set_alarm == 0) {
+	if (key_arm == 0) {
 		delayms(5);
-		if (KEY1_set_alarm == 0) {
-		 	while (!KEY1_set_alarm);
-			//buzzer(100);
-			KEY0_count = 0;
-			alarm_display();
-			KEY_count_handle(KEY1_count_p);
+		if (key_arm == 0) {
+		 	while(!key_arm);
+			status = 1;
+			lcd_write_com(0x0f);
+			while(TRUE) {		//循环检查是否按下其他键，唯一出口为设置完毕
+				if (key_arm == 0) {
+				   	delayms(5);
+					if (key_arm == 0) {
+					 	while (!key_arm);
+						++key_count;
+						select_set();
+					}
+				}
+				if (key_add == 0) {
+				  	delayms(5);
+					if (key_add == 0) {
+						while (!key_add);
+					 	add();
+						alarm_display();
+						select_set();
+					}
+				} 
+				if (key_sub == 0) {
+				  	delayms(5);
+					if (key_sub == 0) {
+						while (!key_sub);
+					      	sub();
+						alarm_display();
+						select_set();
+					}
+				}
+				if (key_count == 6) {
+					key_count = 0;
+					lcd_write_com(0x0c);
+					break;	//唯一出口
+				}		
+			}
 		}
-	}
-	if (KEY0_count != 0) {
-		add_sub_select(KEY0_count, SYSTEM);
-	}
-	if (KEY1_count != 0) {
-	 	add_sub_select(KEY1_count, ALARM);
 	}
 }
 
-static void add_sub_select(uint count, uint status)
+void select_set()
 {
-	if (KEY2_add == 0) {
-	      	delayms(5);
-		if (KEY2_add == 0) {
-			while (!KEY2_add);
-			//buzzer(100);
-			set_add(count, status);
-		}
-	}				     
-	if (KEY3_sub == 0) {
-		delayms(5);
-		if (KEY3_sub == 0) {
-		    	while (!KEY3_sub);
-			//buzzer(100);
-			set_sub(count, status);
-		}
-	}
-}
-
-static void KEY_count_handle(uint *count)
-{
-	++(*count);
-	switch (*count) {
-	case 1:
-		TR0 = 0;   
-		lcd_write_com(0x0f);
+	switch (key_count) {
+ 	case 0:  
 		lcd_write_com(SECOND_LCD_BIT + 2);
 		break;
-	case 2:
+	case 1:
 		lcd_write_com(MINUTE_LCD_BIT + 2);
 		break;
-	case 3:
+	case 2:
 		lcd_write_com(HOUR_LCD_BIT + 2);
 		break;
-	case 4:
+	case 3:
 		lcd_write_com(DAY_LCD_BIT + 2);
 		break;
-	case 5:
+	case 4:
 		lcd_write_com(MONTH_LCD_BIT + 2);
 		break;
-	case 6:
+	case 5:
 		lcd_write_com(YEAR_LCD_BIT + 4);
 		break;
-	case 7:
-		*count = 0;
-		lcd_write_com(0x0c);
-		system_display();
-		TR0 = 1;
+	}
+}
+
+void add()
+{
+	time_struct *current = systime;
+	if (status == 1) {
+	  	current = armtime;
+	} 
+	switch (key_count) {
+	case 0:
+		current->second = ++(current->second) % 60;
+		break;
+	case 1:
+		current->minute = ++(current->minute) % 60;
+		break;
+	case 2:
+		current->hour = ++(current->hour) % 24;
+		break; 	
+	case 3:
+		current->day = ++(current->day) % (month_day[(current->month) - 1] + 1);
+		if (current->day == 0) ++(current->day);
+		break;
+	case 4:
+		if (++(current->month) == 13) current->month = 1; 
+		break;
+	case 5:
+		++(current->year);
+		break; 	
+	}
+}
+
+void sub()
+{
+	time_struct *current = systime;
+	if (status == 1) {
+	  	current = armtime;
+	} 
+    	switch (key_count) {
+ 	case 0:
+		if (current->second != 0) --(current->second);
+		break;
+	case 1:
+		if (current->minute != 0) --(current->minute);
+		break;
+	case 2:
+		if (current->hour != 0) --(current->hour);
+		break;
+	case 3:
+		if (current->day != 1) --(current->day);
+		break;
+	case 4:
+		if (current->month != 1) --(current->month);
+		break;
+	case 5:
+		if (current->year != 1970) --(current->year);
+		break;
 	}
 }

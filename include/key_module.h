@@ -3,8 +3,6 @@
 
 
 void key_scan();
-void set_sub(uint, uint);
-void set_add(uint, uint);
 
 
 #endif
