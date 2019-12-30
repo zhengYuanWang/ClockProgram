@@ -16,3 +16,15 @@ void alarm_display()
 	lcd_update_bit(MINUTE_LCD_BIT, armtime->minute); lcd_write_data(':');
 	lcd_update_bit(SECOND_LCD_BIT, armtime->second);	 
 }
+
+void time_out()
+{
+	if (armtime->year == systime->year
+		&& armtime->month == systime->month
+		&& armtime->day == systime->day
+		&& armtime->hour == systime->hour
+		&& armtime->minute == systime->minute
+		&& armtime->second == systime->second) {
+		buzzer(1000);
+	}
+}

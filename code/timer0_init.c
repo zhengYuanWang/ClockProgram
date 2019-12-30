@@ -20,11 +20,11 @@ void timer0_init()
 	systime->day = 25;
 	systime->week = get_week(systime->year, systime->month, systime->day);
 
-	armtime->second = 58;
-	armtime->minute = 59;
-	armtime->hour = 23;
+	armtime->second = 0;
+	armtime->minute = 0;
+	armtime->hour = 0;
 	armtime->year = 2019;
 	armtime->month = 12;
-	armtime->day = 24;
+	armtime->day = 26;
 	armtime->week = get_week(armtime->year, armtime->month, armtime->day);
 }

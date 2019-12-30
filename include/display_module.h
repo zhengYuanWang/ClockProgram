@@ -15,7 +15,6 @@ void lcd_update_year(uchar, uint) reentrant;
 void lcd_update_week(uchar, uint) reentrant;
 void lcd_init();
 void system_display();
-void alarm_display();
 
 
 #endif

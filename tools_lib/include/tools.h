@@ -7,6 +7,7 @@
 
 
 #include "stc89c52.h"
+#include <stdlib.h>
 
 #define uint	unsigned int
 #define uchar 	unsigned char
@@ -45,7 +46,8 @@ void nixie_light_blink(uchar, uchar);
 void mat_key_scan(void (*event_p)(uint));
 
 /*
- * LCD写命令写数据	
+ * LCD写命令写数据
+ * 注:课程设计需要,将开发板对LCD默认IO口P0->P1
  */
 void lcd_write_com(uchar);
 void lcd_write_data(uchar);

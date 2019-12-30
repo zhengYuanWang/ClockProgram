@@ -64,7 +64,8 @@ void key_scan()
 		delayms(5);
 		if (key_arm == 0) {
 		 	while(!key_arm);
-			status = 1;
+			status = 1;	     
+			alarm_display();
 			lcd_write_com(0x0f);
 			while(TRUE) {		//循环检查是否按下其他键，唯一出口为设置完毕
 				if (key_arm == 0) {
@@ -72,6 +73,7 @@ void key_scan()
 					if (key_arm == 0) {
 					 	while (!key_arm);
 						++key_count;
+						alarm_display();
 						select_set();
 					}
 				}

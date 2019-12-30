@@ -2,6 +2,7 @@
 #include "time_module.h"
 #include "display_module.h"
 #include "key_module.h"
+#include "function_module.h"
 
 sbit rd = P3^7;	
 
@@ -14,5 +15,6 @@ void main()
 	while(TRUE) {
 	    	system_display();
 		key_scan();
+		time_out();
 	}
 }

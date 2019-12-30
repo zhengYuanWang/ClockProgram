@@ -6,5 +6,8 @@
 
 extern time_struct *armtime;
 
+void alarm_display();
+void time_out();
+
 
 #endif
